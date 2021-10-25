@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Advert: {{ advert.adv_name }}</title>
+</head>
+<body>
+    <h1>Здравствуйте, {{ user.username }}! </h1>
+    <h3>Появилась новая запись {{ advert.post_name }} со следующим содержимым: </h3>
+    <h3>{{ advert.content}}</h3>
+    <h3>Можете прочесть ее перейдя <a href="{{ new_advert_url }}">по ссылке</a>.</h3>
+</body>
+</html>

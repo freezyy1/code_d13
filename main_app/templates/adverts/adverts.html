@@ -1,0 +1,97 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+<!-- Название у нас будет posts -->
+{% block title %}
+    Объявления
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+    <h1>Все объявления</h1>
+    <h3>Общее количество: {{ adverts | length }}</h3>
+    <hr>
+    {% if adverts %} <!-- Выводим посты только если они есть с помощью тега if -->
+        <table>
+            <tr>
+                <td>
+                    Рисунок
+                </td>
+                <td>
+                    Название
+                </td>
+                <td>
+                    Категория
+                </td>
+                <td>
+                    Дата публикации
+                </td>
+                <td>
+                    Содержание
+                </td>
+            </tr>
+        {% for advert in page_obj %} <!-- Для каждого товара будете генерироваться новая строчка,
+            т.е. новый html код. При этом сам цикл работет точно также, как и в python.
+            advert — переменная цикла, т.е. наш товар взятый из общего списка -->
+            <tr>
+                <td>
+                    {% if advert.image %}
+                        <img src="{{ advert.image.url }}" alt="{{ advert.title }}" width="70">
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'adverts:advert' advert.id %}">{{ advert.adv_name }}</a> <!-- не забываем что переменные в шаблоне ничем не отличаются
+                        от переменных в python. Здесь также можно получать доступ к полям класса.
+                        Например здесь мы выводим имя, в следующем столбце описание, и т.д.  -->
+                    <a href="{% url 'adverts:advert_update' advert.id %}"><u> Редактировать </u></a>
+                <!-- добавим ссылку на редактирование товара-->
+                 <a href="{% url 'adverts:advert_delete' advert.id %}"><u> Удалить </u></a>
+                <!-- добавим ссылку на удаление товара-->
+                </td>
+                <td>
+                    {{ advert.category.cat_name }}
+                </td>
+                <td>
+                    {{ advert.created | date:'d M Y' }}
+                </td>
+                <td>
+                    {{ advert.content | truncatechars:100 }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        <hr>
+        <a href="{% url 'adverts:advert_create' %}">Добавить новую запись</a> <br>
+        <!-- Проверяем что поддерживается постраничный вывод -->
+        <hr>
+        {% if is_paginated %}
+
+        <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+            {% if page_obj.has_previous %}
+                <a href="?page=1">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+            {% endif %}
+
+        <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a>{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+        <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">>>></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        {% endif %}
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h2>Объявлений нет!</h2>
+        <a href="{% url 'adverts:advert_create' %}">Добавить новую запись</a> <br>
+    {% endif %}
+
+{% endblock content %}

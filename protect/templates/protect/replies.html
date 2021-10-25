@@ -1,0 +1,22 @@
+{% extends 'protect/profile.html' %}
+
+{% block replies %}
+    <h3>Список откликов на {{ advert.adv_name }}:</h3> <br>
+    {% if adv_replies %}
+        {% for adv_reply in adv_replies %}
+            <p>{{ adv_reply.text }}</p>
+            <i>
+                {{ adv_reply.created_reply }} by {{ adv_reply.user.username }}
+                <a href="{% url 'take_reply' advert.id adv_reply.id %}">Принять</a>
+                <a href="{% url 'delete_reply' advert.id adv_reply.id %}">Удалить</a>
+            </i>
+            {% block adv_reply %}
+            {% endblock %}
+            <br><br>
+        {% endfor %}
+    {% else %}
+        <br>
+        Откликов нет!<br>
+    {% endif %}
+    <a href="/">Назад</a>
+{% endblock %}

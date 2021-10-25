@@ -1,0 +1,60 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+  {{ advert.adv_name }}
+{% endblock title %}
+
+{% block content %}
+    <h3>{{ advert.adv_name }}</h3>
+    <h4>Категория: {{ advert.category.cat_name }}</h4>
+    Дата создания: {{ advert.created | date:'d M Y' }}
+    <hr>
+    {% if advert.image %}
+        <img src="{{ advert.image.url }}" alt="{{ advert.title }}" width="500">
+    {% endif %}
+
+    {{ advert.content }}
+    <br><br>
+    {% if advert.video %}
+        <video width='400' controls>
+        <source src='{{ MEDIA_URL }}{{ advert.video }}' type='video/mp4'>
+        Your browser does not support the video tag.
+        </video>
+    {% endif %}
+    <br><br>
+    {% if advert.file %}
+        <a href="{{ MEDIA_URL }}{{ advert.file }}">{{ advert.title }}</a>
+    {% endif %}
+    <hr>
+    <h3>Отклики</h3>
+    {% with advert.replies.count as total_replies %}
+        <h4>{{ total_replies }} reply {{ total_replies | pluralize }}</h4>
+    {% endwith %}
+    <hr>
+    {% if new_reply %}
+        <h4>Your reply has been added.</h4>
+    {% else %}
+        <h4>Add a new reply</h4>
+        <form method="post" class="mb-10">
+            {% csrf_token %}
+            {{ reply_form.as_p }}
+            <input type="submit" value="Add reply">
+        </form>
+    {% endif %}
+    <hr>
+    <ul class="list-group mt-10">
+    {% for reply in advert.replies.all %}
+        <li class="list-group-item">
+            <p>{{ reply.text }}</p>
+            <p class="float-end">
+                <p class="fs-6">{{ reply.created_reply }}</p>
+                <p class="fs-6"> by {{ reply.user }}</p>
+        </li>
+    {% empty %}
+        <p>There are no replies yet.</p>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}
