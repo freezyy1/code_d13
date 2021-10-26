@@ -49,14 +49,14 @@ class Advert(models.Model):
 class Reply(models.Model):
     advert = models.ForeignKey(Advert, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField("Текст отклика")
+    text = models.TextField("Текст ответа")
     created_reply = models.DateTimeField(auto_now_add=True)
     taken = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_reply']
-        verbose_name = 'Отклик'
-        verbose_name_plural = 'Отклики'
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
 
     def __str__(self) -> str:
         return f'Reply by {self.user} on {self.advert}'

@@ -6,11 +6,16 @@
 
 {% block content %}
     <h2>Страница авторизованного пользователя {{request.user.username}}</h2>
-    <div> Здесь может содержаться персональная информация для каждого пользователя </div>
-    <hr>
 
+
+    <form action="http://127.0.0.1:8000/adverts/" target="_blank">
+        <button>Переход на главную страницу</button>
+    </form>
+
+    <hr>
+    <h3>Объявления {{ request.user.username }}:</h3>
     {% if adverts %}
-        <h3>Объявления {{ request.user.username }}:</h3>
+
         {% for advert in adverts %}
             <a href="{% url 'replies_by_advert' advert.id %}">{{ advert.adv_name }}, </a>
         {% endfor %}
@@ -26,8 +31,8 @@
     {% endif %}
     <hr>
 
+    <h3>Отклики {{ request.user.username }}:</h3><br>
     {% if replies %}
-        <h3>Отклики {{ request.user.username }}:</h3><br>
         {% for reply in replies %}
             {{ reply.text }} {{ reply.created_reply }} - {{ reply.advert }}<br><br>
         {% endfor %}
@@ -35,8 +40,10 @@
     {% endif %}
     <hr>
     <button> <a href="sign/logout/">Выйти</a> </button>
-    {% if is_not_announcers %}
-        <button> <a href="sign/upgrade/">Подать объявление!</a> </button>
-    {% endif %}
+    {% comment "Comment" %}
+        {% if is_not_announcers %}
+            <button> <a href="sign/upgrade/">Подать объявление!</a> </button>
+        {% endif %}
+    {% endcomment %}
 {% endblock %}
 

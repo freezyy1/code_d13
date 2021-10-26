@@ -11,12 +11,23 @@
 {% block content %}
     <h1>Все объявления</h1>
     <h3>Общее количество: {{ adverts | length }}</h3>
+    <form method="GET">
+        {{ filter.form }}
+        <input type="submit" value="Найти">
+    </form>
+
     <hr>
     {% if adverts %} <!-- Выводим посты только если они есть с помощью тега if -->
         <table>
             <tr>
                 <td>
                     Рисунок
+                </td>
+                <td>
+                    файл
+                </td>
+                <td>
+                    видео
                 </td>
                 <td>
                     Название
@@ -38,6 +49,16 @@
                 <td>
                     {% if advert.image %}
                         <img src="{{ advert.image.url }}" alt="{{ advert.title }}" width="70">
+                    {% endif %}
+                </td>
+                <td>
+                    {% if advert.file %}
+                        <img src="{{ advert.file.url }}" alt="{{ advert.title }}" width="70">
+                    {% endif %}
+                </td>
+                <td>
+                    {% if advert.video %}
+                        <img src="{{ advert.video.url }}" alt="{{ advert.title }}" width="70">
                     {% endif %}
                 </td>
                 <td>

@@ -1,5 +1,5 @@
 from django.db.models.signals import post_save, post_delete
-from django.dispatch import receiver  # импортируем нужный декоратор
+from django.dispatch import receiver
 from django.core.mail import mail_managers, mail_admins, send_mail
 from .models import Reply, Advert
 

@@ -13,7 +13,6 @@ class AdvertForm(ModelForm):
 
 
 class ReplyForm(ModelForm):
-
     class Meta:
         model = Reply
         fields = ('user', 'advert', 'text')
@@ -22,4 +21,3 @@ class ReplyForm(ModelForm):
             "advert": Select(choices=Advert.objects.all(), attrs={"class": "form-control"}),
             "text": Textarea(attrs={"class": "form-control"})
         }
-

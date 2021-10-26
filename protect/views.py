@@ -1,11 +1,7 @@
-# import requests
-# from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
 from .forms import UserForm
 from main_app.models import Reply, Advert
 
@@ -46,7 +42,7 @@ def take_reply(request, advert_pk, reply_pk):
     send_mail(
         subject='Your reply is taken',
         message=f'Hi! Your reply from {reply.created_reply} is taken.',
-        from_email='mongushit@yandex.ru',
+        from_email='Freezyyyyy@yandex.ru',
         recipient_list=[request.user.email]
     )
     return redirect(f'/{advert_pk}/')

@@ -1,0 +1,1 @@
+/Users/dmitrij/PycharmProjects/d13_pure_project/venv/lib/python3.9/site-packages/django/utils/log.py WARNING 2021-10-26 12:29:19,581 log Forbidden (CSRF token missing or incorrect.): /accounts/login/ None
