@@ -55,7 +55,7 @@ class AdvertDetailView(DetailView, FormView):
 
 
 class AdvertCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = ('adverts.add_advert',)
+    permission_required = ('main_app.add_advert',)
     template_name = 'adverts/advert_create.html'
     form_class = AdvertForm
     success_url = '/adverts/'
@@ -66,7 +66,7 @@ class AdvertCreateView(PermissionRequiredMixin, CreateView):
 
 
 class AdvertUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = ('adverts.change_advert',)
+    permission_required = ('main_app.change_advert',)
     template_name = 'adverts/advert_create.html'
     form_class = AdvertForm
     success_url = '/adverts/'
@@ -77,7 +77,7 @@ class AdvertUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 class AdvertDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = ('adverts.delete_advert',)
+    permission_required = ('main_app.delete_advert',)
     template_name = 'adverts/advert_delete.html'
     queryset = Advert.objects.all()
     success_url = '/adverts/'

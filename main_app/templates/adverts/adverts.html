@@ -9,6 +9,16 @@
 
 
 {% block content %}
+
+<style type="text/css">
+   .indentation {
+       padding: 10px 15px 5px 15px;
+   }
+   .indentation_for_txt{
+       padding: 3px 15px 3px 15px;
+   }
+</style>
+
     <h1>Все объявления</h1>
     <h3>Общее количество: {{ adverts | length }}</h3>
     <form method="GET">
@@ -20,57 +30,63 @@
     {% if adverts %}
         <table>
             <tr>
-                <td>
+                <td class="indentation">
+                    Автор
+                </td>
+                <td class="indentation">
                     Рисунок
                 </td>
-                <td>
+                <td class="indentation">
                     файл
                 </td>
-                <td>
+                <td class="indentation">
                     видео
                 </td>
-                <td>
+                <td class="indentation">
                     Название
                 </td>
-                <td>
+                <td class="indentation">
                     Категория
                 </td>
-                <td>
+                <td class="indentation">
                     Дата публикации
                 </td>
-                <td>
+                <td class="indentation">
                     Содержание
                 </td>
             </tr>
         {% for advert in page_obj %}
             <tr>
-                <td>
+                <td class="indentation_for_txt">
+                    {{ advert.announcer }}
+                </td>
+                <td class="indentation_for_txt">
                     {% if advert.image %}
                         <img src="{{ advert.image.url }}" alt="{{ advert.title }}" width="70">
                     {% endif %}
                 </td>
-                <td>
+                <td class="indentation_for_txt">
                     {% if advert.file %}
                         <img src="{{ advert.file.url }}" alt="{{ advert.title }}" width="70">
                     {% endif %}
                 </td>
-                <td>
+                <td class="indentation_for_txt">
                     {% if advert.video %}
                         <img src="{{ advert.video.url }}" alt="{{ advert.title }}" width="70">
                     {% endif %}
                 </td>
-                <td>
+                <td class="indentation_for_txt">
                     <a href="{% url 'adverts:advert' advert.id %}">{{ advert.adv_name }}</a>
                     <a href="{% url 'adverts:advert_update' advert.id %}"><u> Редактировать </u></a>
                  <a href="{% url 'adverts:advert_delete' advert.id %}"><u> Удалить </u></a>
                 </td>
-                <td>
+                <td class="indentation_for_txt">
                     {{ advert.category.cat_name }}
                 </td>
-                <td>
+                <td class="indentation_for_txt">
                     {{ advert.created | date:'d M Y' }}
                 </td>
-                <td>
+                <td class="indentation_for_txt">
                     {{ advert.content | truncatechars:100 }}
                 </td>
             </tr>

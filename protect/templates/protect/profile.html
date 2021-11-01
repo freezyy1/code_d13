@@ -8,26 +8,22 @@
     <h2>Страница авторизованного пользователя {{request.user.username}}</h2>
 
 
-    <form action="http://127.0.0.1:8000/adverts/" target="_blank">
+    <form action="/adverts" target="_blank">
         <button>Переход на главную страницу</button>
     </form>
 
     <hr>
     <h3>Объявления {{ request.user.username }}:</h3>
-    {% if adverts %}
 
-        {% for advert in adverts %}
-            <a href="{% url 'replies_by_advert' advert.id %}">{{ advert.adv_name }}, </a>
-        {% endfor %}
+    {% for advert in adverts %}
+        <a href="{% url 'replies_by_advert' advert.id %}">{{ advert.adv_name }}, </a>
+    {% endfor %}
 
-    {% endif %}
+
     {% if adv_replies %}
         <br>
         {% block replies %}
         {% endblock replies %}
-    {% else %}
-
-        <a href="/">Назад</a>
     {% endif %}
     <hr>
 
@@ -40,10 +36,8 @@
     {% endif %}
     <hr>
     <button> <a href="sign/logout/">Выйти</a> </button>
-    {% comment "Comment" %}
-        {% if is_not_announcers %}
-            <button> <a href="sign/upgrade/">Подать объявление!</a> </button>
-        {% endif %}
-    {% endcomment %}
+    {% if is_not_announcers %}
+        <button> <a href="sign/upgrade/">Подать объявление!</a> </button>
+    {% endif %}
 {% endblock %}
 

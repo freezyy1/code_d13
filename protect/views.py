@@ -15,6 +15,7 @@ def replies_by_advert(request, advert_pk):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'protect/profile.html'
+    model = Advert
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
